@@ -69,4 +69,15 @@ richard.speak();
 
 // Principle 4
 
-jenny.speak.call(richard);richard.speak.apply(jenny)
+const yourObject = {
+    name: 'Suparada',
+    city: "Tulsa, OK",
+    favoriteFood: 'Sushi' 
+  }
+  
+  const thingsYouEnjoy = ['Swimming', 'Cooking', 'Traveling']
+  function tellUsAboutYourself(thing1, thing2, thing3){
+    return `Hi! My name is ${this.name}, I live in ${this.city}, and I enjoy ${thing1}, ${thing2}, and ${thing3}. I love to eat ${this.favoriteFood}.`
+  }
+  console.log(tellUsAboutYourself.apply(yourObject, thingsYouEnjoy))
+  console.log()

@@ -15,7 +15,6 @@
   * dimensions (These represent the character's size in the video game)
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
-
 /*
   === CharacterStats ===
   * healthPoints
@@ -32,16 +31,67 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
- 
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
+
+function GameObject(attributes) {
+  this.name = attributes.name
+  this.createdAt = attributes.createdAt
+  this.dimensions = attributes.dimensions
+}
+
+GameObject.prototype.destroy = function () {
+  return `${this.name} was removed from the game`; 
+}
+
+function CharacterStats(attributes) {
+  GameObject.call(this, attributes)
+  this.healthPoints = attributes.healthPoints
+
+}
+
+CharacterStats.prototype = Object.create(GameObject.prototype)
+CharacterStats.prototype.takeDamage = function() {
+  return `${this.name} took damage`;
+}
+
+
+function Humanoid(attributes) {
+  CharacterStats.call(this, attributes)
+  this.team = attributes.team
+  this.weapons = attributes.weapons
+  this.language = attributes.language
+}
+Humanoid.prototype = Object.create(CharacterStats.prototype)
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language} `
+}
+
+function Villain(attributes) {
+  Humanoid.call(this, attributes)
+  
+}
+Villain.prototype = Object.create(Humanoid.prototype)
+Villain.prototype.kill = function() {
+ 
+}
+function Hero(attributes) {
+  Humanoid.call(this, attributes)
+  
+}
+Hero.prototype = Object.create(Humanoid.prototype)
+Hero.prototype.spin = function() {
+  
+}
+
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -92,6 +142,38 @@
     language: 'Elvish',
   });
 
+  const newVillain = new Humanoid({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 10,
+    name: 'Mali',
+    team: 'Spoild Cat',
+    weapons: [
+      'Catnip',
+    ],
+    language: 'Meow',
+  });
+
+  const newHero = new Humanoid({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 2,
+      height: 4,
+    },
+    healthPoints: 10,
+    name: 'Jackie',
+    team: '',
+    weapons: [
+      'Pillow',
+    ],
+    language: 'Meow',
+  });
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -102,7 +184,8 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+  console.log(newVillain);
+  console.log(newHero)
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
